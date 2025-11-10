@@ -2,9 +2,135 @@
 	(version 20250114)
 	(generator "eeschema")
 	(generator_version "9.0")
-	(uuid 3ee12552-bbaf-4643-8241-99077a41063f)
+	(uuid "3ee12552-bbaf-4643-8241-99077a41063f")
 	(paper "A4")
 	(lib_symbols)
+	(sheet
+		(at 40.64 35.56)
+		(size 48.26 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "0cb4d016-03f6-42de-b902-af7c075bf798")
+		(property "Sheetname" "Microcontroller"
+			(at 40.64 34.8484 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "mcu.kicad_sch"
+			(at 40.64 71.7046 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "controller"
+				(path "/3ee12552-bbaf-4643-8241-99077a41063f"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 105.41 34.29)
+		(size 50.8 38.1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "450bdde1-afc4-46bd-91f0-445345463e74")
+		(property "Sheetname" "Thermocouples"
+			(at 105.41 33.5784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "thermocouples.kicad_sch"
+			(at 105.41 72.9746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "controller"
+				(path "/3ee12552-bbaf-4643-8241-99077a41063f"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 172.72 34.29)
+		(size 52.07 38.1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "dc443349-7fb4-42c6-a18e-09a219bb9ecd")
+		(property "Sheetname" "Power"
+			(at 172.72 33.5784 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power.kicad_sch"
+			(at 172.72 72.9746 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "controller"
+				(path "/3ee12552-bbaf-4643-8241-99077a41063f"
+					(page "4")
+				)
+			)
+		)
+	)
 	(sheet_instances
 		(path "/"
 			(page "1")
