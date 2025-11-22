@@ -1,15 +1,7 @@
-//! Embassy access point
-//!
-//! - creates an open access-point with SSID `esp-radio`
-//! - DHCP is enabled so there's no need to configure a static IP
-//! - connect to the AP `esp-radio` and open http://1.1.1.1:8080/ in your browser
-//!
-//! On Android you might need to choose _Keep Accesspoint_ when it tells you the
-//! WiFi has no internet connection, Chrome might not want to load the URL - you
-//! can use a shell and try `curl` and `ping`
-
 #![no_std]
 #![no_main]
+
+use firmware as lib;
 
 use core::{net::Ipv4Addr, str::FromStr};
 
@@ -17,8 +9,6 @@ use embassy_executor::Spawner;
 use embassy_net::{
     IpListenEndpoint,
     Ipv4Cidr,
-    Runner,
-    Stack,
     StackResources,
     StaticConfigV4,
     tcp::TcpSocket,
@@ -30,22 +20,9 @@ use esp_alloc as _;
 use esp_hal::interrupt::software::SoftwareInterruptControl;
 use esp_hal::{clock::CpuClock, ram, rng::Rng, timer::timg::TimerGroup};
 use esp_println::{print, println};
-use esp_radio::{
-    Controller,
-    wifi::{AccessPointConfig, ModeConfig, WifiApState, WifiController, WifiDevice, WifiEvent},
-};
+use esp_radio::Controller;
 
 esp_bootloader_esp_idf::esp_app_desc!();
-
-// When you are okay with using a nightly compiler it's better to use https://docs.rs/static_cell/2.1.0/static_cell/macro.make_static.html
-macro_rules! mk_static {
-    ($t:ty,$val:expr) => {{
-        static STATIC_CELL: static_cell::StaticCell<$t> = static_cell::StaticCell::new();
-        #[deny(unused_attributes)]
-        let x = STATIC_CELL.uninit().write(($val));
-        x
-    }};
-}
 
 #[panic_handler]
 fn panic(_: &core::panic::PanicInfo) -> ! {
@@ -72,7 +49,7 @@ async fn main(spawner: Spawner) -> ! {
         sw_int.software_interrupt0,
     );
 
-    let esp_radio_ctrl = &*mk_static!(Controller<'static>, esp_radio::init().unwrap());
+    let esp_radio_ctrl = &*lib::mk_static!(Controller<'static>, esp_radio::init().unwrap());
 
     let (controller, interfaces) =
         esp_radio::wifi::new(&esp_radio_ctrl, peripherals.WIFI, Default::default()).unwrap();
@@ -95,13 +72,13 @@ async fn main(spawner: Spawner) -> ! {
     let (stack, runner) = embassy_net::new(
         device,
         config,
-        mk_static!(StackResources<3>, StackResources::<3>::new()),
+        lib::mk_static!(StackResources<3>, StackResources::<3>::new()),
         seed,
     );
 
-    spawner.spawn(connection(controller)).ok();
-    spawner.spawn(net_task(runner)).ok();
-    spawner.spawn(run_dhcp(stack, gw_ip_addr_str)).ok();
+    spawner.spawn(lib::wifi::connection(controller)).ok();
+    spawner.spawn(lib::wifi::net_task(runner)).ok();
+    spawner.spawn(lib::wifi::run_dhcp(stack, gw_ip_addr_str)).ok();
 
     let mut rx_buffer = [0; 1536];
     let mut tx_buffer = [0; 1536];
@@ -113,7 +90,7 @@ async fn main(spawner: Spawner) -> ! {
         Timer::after(Duration::from_millis(500)).await;
     }
     println!(
-        "Connect to the AP `esp-radio` and point your browser to http://{gw_ip_addr_str}:8080/"
+        "Connect to the AP `esp-radio` and point your browser to http://{gw_ip_addr_str}:8080/" // TODO: Make SSID dynamic
     );
     println!("DHCP is enabled so there's no need to configure a static IP, just in case:");
     while !stack.is_config_up() {
@@ -139,8 +116,6 @@ async fn main(spawner: Spawner) -> ! {
             println!("connect error: {:?}", e);
             continue;
         }
-
-        use embedded_io_async::Write;
 
         let mut buffer = [0u8; 1024];
         let mut pos = 0;
@@ -195,73 +170,4 @@ async fn main(spawner: Spawner) -> ! {
 
         socket.abort();
     }
-}
-
-#[embassy_executor::task]
-async fn run_dhcp(stack: Stack<'static>, gw_ip_addr: &'static str) {
-    use core::net::{Ipv4Addr, SocketAddrV4};
-
-    use edge_dhcp::{
-        io::{self, DEFAULT_SERVER_PORT},
-        server::{Server, ServerOptions},
-    };
-    use edge_nal::UdpBind;
-    use edge_nal_embassy::{Udp, UdpBuffers};
-
-    let ip = Ipv4Addr::from_str(gw_ip_addr).expect("dhcp task failed to parse gw ip");
-
-    let mut buf = [0u8; 1500];
-
-    let mut gw_buf = [Ipv4Addr::UNSPECIFIED];
-
-    let buffers = UdpBuffers::<3, 1024, 1024, 10>::new();
-    let unbound_socket = Udp::new(stack, &buffers);
-    let mut bound_socket = unbound_socket
-        .bind(core::net::SocketAddr::V4(SocketAddrV4::new(
-            Ipv4Addr::UNSPECIFIED,
-            DEFAULT_SERVER_PORT,
-        )))
-        .await
-        .unwrap();
-
-    loop {
-        _ = io::server::run(
-            &mut Server::<_, 64>::new_with_et(ip),
-            &ServerOptions::new(ip, Some(&mut gw_buf)),
-            &mut bound_socket,
-            &mut buf,
-        )
-        .await
-        .inspect_err(|e| println!("DHCP server error: {e:?}"));
-        Timer::after(Duration::from_millis(500)).await;
-    }
-}
-
-#[embassy_executor::task]
-async fn connection(mut controller: WifiController<'static>) {
-    println!("start connection task");
-    println!("Device capabilities: {:?}", controller.capabilities());
-    loop {
-        match esp_radio::wifi::ap_state() {
-            WifiApState::Started => {
-                // wait until we're no longer connected
-                controller.wait_for_event(WifiEvent::ApStop).await;
-                Timer::after(Duration::from_millis(5000)).await
-            }
-            _ => {}
-        }
-        if !matches!(controller.is_started(), Ok(true)) {
-            let client_config =
-                ModeConfig::AccessPoint(AccessPointConfig::default().with_ssid("esp-radio".into()));
-            controller.set_config(&client_config).unwrap();
-            println!("Starting wifi");
-            controller.start_async().await.unwrap();
-            println!("Wifi started!");
-        }
-    }
-}
-
-#[embassy_executor::task]
-async fn net_task(mut runner: Runner<'static, WifiDevice<'static>>) {
-    runner.run().await
 }
