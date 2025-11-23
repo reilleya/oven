@@ -6,19 +6,14 @@ use firmware as lib;
 use core::{net::Ipv4Addr, str::FromStr};
 
 use embassy_executor::Spawner;
-use embassy_net::{
-    IpListenEndpoint,
-    Ipv4Cidr,
-    StackResources,
-    StaticConfigV4,
-};
+use embassy_net::{Ipv4Cidr, StackResources, StaticConfigV4};
 use embassy_time::{Duration, Timer};
 use esp_alloc as _;
 //use esp_backtrace as _;
 #[cfg(target_arch = "riscv32")]
 use esp_hal::interrupt::software::SoftwareInterruptControl;
 use esp_hal::{clock::CpuClock, ram, rng::Rng, timer::timg::TimerGroup};
-use esp_println::{print, println};
+use esp_println::println;
 use esp_radio::Controller;
 
 esp_bootloader_esp_idf::esp_app_desc!();
@@ -27,7 +22,8 @@ esp_bootloader_esp_idf::esp_app_desc!();
 fn panic(panic_info: &core::panic::PanicInfo) -> ! {
     println!("PANIC: {}", panic_info.message());
     if let Some(location) = panic_info.location() {
-        println!("Panic occurred in file '{}' at line {}",
+        println!(
+            "Panic occurred in file '{}' at line {}",
             location.file(),
             location.line(),
         );
@@ -97,9 +93,7 @@ async fn main(spawner: Spawner) -> ! {
 
     let ssid = lib::wifi::SSID;
     let gw_ip_addr_str = lib::wifi::GW_IP_ADDR;
-    println!(
-        "Connect to the AP `{ssid}` and point your browser to http://{gw_ip_addr_str}"
-    );
+    println!("Connect to the AP `{ssid}` and point your browser to http://{gw_ip_addr_str}");
     println!("DHCP is enabled so there's no need to configure a static IP, just in case:");
     while !stack.is_config_up() {
         Timer::after(Duration::from_millis(100)).await
@@ -121,5 +115,4 @@ async fn main(spawner: Spawner) -> ! {
     loop {
         Timer::after(Duration::from_secs(1)).await;
     }
-
 }

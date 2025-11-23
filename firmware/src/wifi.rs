@@ -1,15 +1,14 @@
 use core::str::FromStr;
 
-use embassy_net::{
-    Runner,
-    Stack
-};
+use embassy_net::{Runner, Stack};
 use embassy_time::{Duration, Timer};
 use esp_alloc as _;
 //use esp_backtrace as _;
 #[cfg(target_arch = "riscv32")]
 use esp_println::println;
-use esp_radio::wifi::{AccessPointConfig, ModeConfig, WifiApState, WifiController, WifiDevice, WifiEvent, AuthMethod};
+use esp_radio::wifi::{
+    AccessPointConfig, AuthMethod, ModeConfig, WifiApState, WifiController, WifiDevice, WifiEvent,
+};
 
 pub const WIFI_TASK_POOL_SIZE: usize = 3;
 
@@ -71,8 +70,12 @@ pub async fn connection(mut controller: WifiController<'static>) {
             _ => {}
         }
         if !matches!(controller.is_started(), Ok(true)) {
-            let client_config =
-                ModeConfig::AccessPoint(AccessPointConfig::default().with_ssid(SSID.into()).with_auth_method(AuthMethod::Wpa2Personal).with_password(PASSWORD.into()));
+            let client_config = ModeConfig::AccessPoint(
+                AccessPointConfig::default()
+                    .with_ssid(SSID.into())
+                    .with_auth_method(AuthMethod::Wpa2Personal)
+                    .with_password(PASSWORD.into()),
+            );
             controller.set_config(&client_config).unwrap();
             println!("Starting wifi");
             controller.start_async().await.unwrap();

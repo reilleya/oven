@@ -12,5 +12,5 @@ macro_rules! mk_static {
     }};
 }
 
-pub mod wifi;
 pub mod web;
+pub mod wifi;
