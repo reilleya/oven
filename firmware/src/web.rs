@@ -1,5 +1,6 @@
 use embassy_net::Stack;
 use embassy_time::Duration;
+use embassy_executor::Spawner;
 use esp_alloc as _;
 use picoserve::{AppBuilder, AppRouter, Router, response::File, routing};
 
@@ -58,4 +59,17 @@ impl Default for WebApp {
 
         Self { router, config }
     }
+}
+
+pub fn start_webserver(spawner: Spawner, stack: Stack<'static>) -> WebApp {
+    let web_app = WebApp::default();
+    for id in 0..WEB_TASK_POOL_SIZE {
+        spawner.must_spawn(web_task(
+            id,
+            stack,
+            web_app.router,
+            web_app.config,
+        ));
+    }
+    web_app
 }

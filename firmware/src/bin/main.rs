@@ -76,7 +76,6 @@ async fn main(spawner: Spawner) -> ! {
     let rng = Rng::new();
     let seed = (rng.random() as u64) << 32 | rng.random() as u64;
 
-    // Init network stack
     let (stack, runner) = embassy_net::new(
         device,
         config,
@@ -108,15 +107,7 @@ async fn main(spawner: Spawner) -> ! {
         .config_v4()
         .inspect(|c| println!("ipv4 config: {c:?}"));
 
-    let web_app = lib::web::WebApp::default();
-    for id in 0..lib::web::WEB_TASK_POOL_SIZE {
-        spawner.must_spawn(lib::web::web_task(
-            id,
-            stack,
-            web_app.router,
-            web_app.config,
-        ));
-    }
+    let web_app = lib::web::start_webserver(spawner, stack);
 
     loop {
         Timer::after(Duration::from_secs(1)).await;

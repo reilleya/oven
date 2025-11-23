@@ -1,9 +1,18 @@
-use core::str::FromStr;
-
 use embassy_net::{
     Runner,
-    Stack
+    Stack,
+    IpListenEndpoint,
+    Ipv4Cidr,
+    StackResources,
+    StaticConfigV4,
 };
+use esp_radio::Controller;
+use esp_hal::{peripherals::Peripherals, clock::CpuClock, ram, rng::Rng, timer::timg::TimerGroup};
+
+use embassy_executor::Spawner;
+
+use core::{net::Ipv4Addr, str::FromStr};
+
 use embassy_time::{Duration, Timer};
 use esp_alloc as _;
 //use esp_backtrace as _;
@@ -84,4 +93,55 @@ pub async fn connection(mut controller: WifiController<'static>) {
 #[embassy_executor::task]
 pub async fn net_task(mut runner: Runner<'static, WifiDevice<'static>>) {
     runner.run().await
+}
+
+pub async fn start_wifi<const SIZE: usize>(spawner: Spawner, peripherals: Peripherals, esp_radio_ctrl: Controller<'static>, resources: &mut StackResources<SIZE>) -> Stack<'static> {
+    let (controller, interfaces) =
+        esp_radio::wifi::new(&esp_radio_ctrl, peripherals.WIFI, Default::default()).unwrap();
+
+    let device = interfaces.ap;
+
+    let gw_ip_addr = Ipv4Addr::from_str(GW_IP_ADDR).expect("failed to parse gateway ip");
+
+    let config = embassy_net::Config::ipv4_static(StaticConfigV4 {
+        address: Ipv4Cidr::new(gw_ip_addr, 24),
+        gateway: Some(gw_ip_addr),
+        dns_servers: Default::default(),
+    });
+
+    let rng = Rng::new();
+    let seed = (rng.random() as u64) << 32 | rng.random() as u64;
+
+    let (stack, runner) = embassy_net::new(
+        device,
+        config,
+        resources,
+        seed,
+    );
+
+    spawner.spawn(connection(controller)).ok();
+    spawner.spawn(net_task(runner)).ok();
+    spawner.spawn(run_dhcp(stack)).ok();
+
+    loop {
+        if stack.is_link_up() {
+            break;
+        }
+        Timer::after(Duration::from_millis(500)).await;
+    }
+
+    let ssid = SSID;
+    let gw_ip_addr_str = GW_IP_ADDR;
+    println!(
+        "Connect to the AP `{ssid}` and point your browser to http://{gw_ip_addr_str}"
+    );
+    println!("DHCP is enabled so there's no need to configure a static IP, just in case:");
+    while !stack.is_config_up() {
+        Timer::after(Duration::from_millis(100)).await
+    }
+    stack
+        .config_v4()
+        .inspect(|c| println!("ipv4 config: {c:?}"));
+
+    stack
 }
