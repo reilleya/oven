@@ -3,6 +3,12 @@ use embassy_time::Duration;
 use esp_alloc as _;
 use picoserve::{AppBuilder, AppRouter, Router, response::File, routing};
 
+#[derive(serde::Deserialize)]
+struct FormValue {
+    a: i32,
+    b: heapless::String<32>,
+}
+
 pub struct Application;
 
 impl AppBuilder for Application {
@@ -11,7 +17,11 @@ impl AppBuilder for Application {
     fn build_app(self) -> picoserve::Router<Self::PathRouter> {
         picoserve::Router::new().route(
             "/",
-            routing::get_service(File::html(include_str!("index.html"))),
+            routing::get_service(File::html(include_str!("index.html"))).post(
+            async |picoserve::extract::Form(FormValue { a, b })| {
+                picoserve::response::DebugValue((("a", a), ("b", b)))
+            },
+        ),
         )
     }
 }

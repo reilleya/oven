@@ -986,6 +986,7 @@ dependencies = [
  "esp-radio",
  "esp-rtos",
  "picoserve",
+ "serde",
  "smoltcp",
  "static_cell",
 ]
