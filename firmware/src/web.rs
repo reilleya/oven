@@ -1,12 +1,56 @@
 use embassy_net::Stack;
 use embassy_time::Duration;
 use esp_alloc as _;
-use picoserve::{AppBuilder, AppRouter, Router, response::File, routing};
+use picoserve::{extract::State, AppBuilder, AppRouter, Router, response::File, routing};
+
+use picoserve::{
+    response::{with_state::WithStateUpdate, IntoResponse, IntoResponseWithState, Redirect},
+    routing::{get, parse_path_segment},
+};
+
+use core::cell::RefCell;
+
 
 #[derive(serde::Deserialize)]
-struct FormValue {
-    a: i32,
-    b: heapless::String<32>,
+struct SetupFormValue {
+    temperature: i32,
+    time: i32,
+}
+
+struct AppState {
+    temperature: RefCell<i32>,
+    time: RefCell<i32>
+}
+
+#[derive(serde::Serialize)]
+struct AppStateValue {
+    temperature: i32,
+    time: i32
+}
+
+impl picoserve::extract::FromRef<AppState> for AppStateValue {
+    fn from_ref(AppState { temperature, time, .. }: &AppState) -> Self {
+        Self {
+            temperature: *temperature.borrow(),
+            time: *time.borrow()
+        }
+    }
+}
+
+async fn get_value(State(value): State<AppStateValue>) -> impl IntoResponse {
+    picoserve::response::Json(value)
+}
+
+async fn increment_value() -> impl IntoResponseWithState<AppState> {
+    Redirect::to(".").with_state_update(async |state: &AppState| {
+        *state.temperature.borrow_mut() += 1;
+    })
+}
+
+async fn set_value(value: i32) -> impl IntoResponseWithState<AppState> {
+    Redirect::to("..").with_state_update(async move |state: &AppState| {
+        *state.temperature.borrow_mut() = value;
+    })
 }
 
 pub struct Application;
@@ -15,14 +59,20 @@ impl AppBuilder for Application {
     type PathRouter = impl routing::PathRouter;
 
     fn build_app(self) -> picoserve::Router<Self::PathRouter> {
-        picoserve::Router::new().route(
-            "/",
-            routing::get_service(File::html(include_str!("index.html"))).post(
-            async |picoserve::extract::Form(FormValue { a, b })| {
-                picoserve::response::DebugValue((("a", a), ("b", b)))
-            },
-        ),
-        )
+        let state = AppState { temperature: 0.into(), time: 0.into() };
+
+        picoserve::Router::new()
+            .route(
+                "/",
+                routing::get_service(File::html(include_str!("index.html"))),
+            ).route(
+                "/buttons.js",
+                routing::get_service(File::javascript(include_str!("buttons.js"))),
+            )
+            .route("/get", get(get_value))
+            .route("/increment", get(increment_value))
+            .route(("/set", parse_path_segment()), get(set_value))
+            .with_state(state)
     }
 }
 
