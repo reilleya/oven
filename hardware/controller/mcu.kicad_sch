@@ -4293,7 +4293,7 @@
 	)
 	(global_label "SCK"
 		(shape input)
-		(at 173.99 100.33 0)
+		(at 173.99 102.87 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4303,7 +4303,7 @@
 		)
 		(uuid "10feba4b-da1a-4002-b95f-f09ba6913554")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 180.7247 100.33 0)
+			(at 180.7247 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4381,7 +4381,7 @@
 	)
 	(global_label "CS0"
 		(shape input)
-		(at 173.99 102.87 0)
+		(at 173.99 100.33 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4391,7 +4391,7 @@
 		)
 		(uuid "97d56223-0b1a-497e-87c1-5a8b11a03fae")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 180.6642 102.87 0)
+			(at 180.6642 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4472,7 +4472,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
+		(property "Footprint" "TestPoint:TestPoint_THTPad_2.0x2.0mm_Drill1.0mm"
 			(at 180.34 72.39 0)
 			(effects
 				(font
@@ -6891,7 +6891,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
+		(property "Footprint" "TestPoint:TestPoint_THTPad_2.0x2.0mm_Drill1.0mm"
 			(at 185.42 72.39 0)
 			(effects
 				(font
