@@ -4321,7 +4321,7 @@
 	)
 	(global_label "FAN_1_TACH"
 		(shape input)
-		(at 199.39 77.47 0)
+		(at 199.39 74.93 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4331,7 +4331,7 @@
 		)
 		(uuid "45736497-2a6e-4a0b-8f16-7ebd5ed8a950")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 213.6843 77.47 0)
+			(at 213.6843 74.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4409,7 +4409,7 @@
 	)
 	(global_label "FAN_0_TACH"
 		(shape input)
-		(at 199.39 74.93 0)
+		(at 199.39 77.47 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4419,7 +4419,7 @@
 		)
 		(uuid "ae13a193-20be-454a-b8c4-84dbe2d14519")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 213.6843 74.93 0)
+			(at 213.6843 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
