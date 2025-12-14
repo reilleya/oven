@@ -2425,6 +2425,7 @@
 		(path "/dc443349-7fb4-42c6-a18e-09a219bb9ecd/39fe3be1-5c6d-47c1-bb8e-046c564af3d9")
 		(sheetname "/Power/")
 		(sheetfile "power.kicad_sch")
+		(clearance 0.08)
 		(attr smd)
 		(fp_poly
 			(pts
@@ -4979,6 +4980,7 @@
 		(path "/dc443349-7fb4-42c6-a18e-09a219bb9ecd/e5883270-1d70-4435-b900-e804c8c9c014")
 		(sheetname "/Power/")
 		(sheetfile "power.kicad_sch")
+		(clearance 0.08)
 		(attr smd)
 		(fp_poly
 			(pts
@@ -6012,6 +6014,7 @@
 		(path "/dc443349-7fb4-42c6-a18e-09a219bb9ecd/d1b26398-e9aa-4fca-b0c6-39e58d811c66")
 		(sheetname "/Power/")
 		(sheetfile "power.kicad_sch")
+		(clearance 0.08)
 		(attr smd)
 		(fp_poly
 			(pts
@@ -13316,17 +13319,6 @@
 			(layer "F.CrtYd")
 			(uuid "5ce9c9f5-b59e-4bb2-9424-80eea3f38f9e")
 		)
-		(fp_text user "${REFERENCE}"
-			(at 0 -2 0)
-			(layer "F.Fab")
-			(uuid "fa014093-708f-4bc7-85a8-471707417cb4")
-			(effects
-				(font
-					(size 1 1)
-					(thickness 0.15)
-				)
-			)
-		)
 		(pad "1" thru_hole rect
 			(at 0 0)
 			(size 2 2)
@@ -15022,6 +15014,7 @@
 		(path "/0cb4d016-03f6-42de-b902-af7c075bf798/d12b7f0e-08a0-4fb4-835a-548eb4fd39e1")
 		(sheetname "/Microcontroller/")
 		(sheetfile "mcu.kicad_sch")
+		(clearance 0.01)
 		(attr smd)
 		(fp_line
 			(start -1.5 1.535)
@@ -15267,6 +15260,28 @@
 				(xyz -0 -0 -0)
 			)
 		)
+	)
+	(gr_line
+		(start 123.952 94.996)
+		(end 123.444 94.996)
+		(stroke
+			(width 0.2)
+			(type default)
+		)
+		(layer "F.Cu")
+		(net 66)
+		(uuid "3ed7822e-6dcd-43f4-83e1-54dbacc7b042")
+	)
+	(gr_line
+		(start 123.444 94.996)
+		(end 122.936 95.758)
+		(stroke
+			(width 0.2)
+			(type default)
+		)
+		(layer "F.Cu")
+		(net 66)
+		(uuid "cac8b086-6f72-47d5-9e91-aa7689180026")
 	)
 	(gr_line
 		(start 107.25 116.5)
@@ -16914,28 +16929,6 @@
 					(xy 163.514815 103.319532) (xy 163.508779 103.456753) (xy 163.491784 103.574708) (xy 163.465245 103.675838)
 					(xy 163.430201 103.762335) (xy 163.387279 103.836098) (xy 163.336665 103.898686) (xy 163.278091 103.951252)
 				)
-			)
-		)
-	)
-	(gr_text "${REFERENCE}"
-		(at 117.475 111.03 0)
-		(layer "F.Fab")
-		(uuid "5f5387b0-cddb-4330-b494-e4ccd37f7199")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
-			)
-		)
-	)
-	(gr_text "${REFERENCE}"
-		(at 113.665 111.03 0)
-		(layer "F.Fab")
-		(uuid "cfe98447-4904-48d9-b7bb-b2c0b29a8d6d")
-		(effects
-			(font
-				(size 1 1)
-				(thickness 0.15)
 			)
 		)
 	)
@@ -20412,38 +20405,6 @@
 				(xy 121.17024 95.586312) (xy 121.177685 95.560961) (xy 121.184525 95.555033) (xy 121.188287 95.546797)
 				(xy 121.210521 95.532507) (xy 121.230489 95.515206) (xy 121.241003 95.512918) (xy 121.247065 95.509023)
 				(xy 121.282 95.504) (xy 121.4501 95.504)
-			)
-		)
-	)
-	(zone
-		(net 0)
-		(net_name "")
-		(layer "F.Cu")
-		(uuid "cdb88451-f76b-47fb-a5e1-f5a6d1334813")
-		(hatch edge 0.5)
-		(connect_pads
-			(clearance 0)
-		)
-		(min_thickness 0.25)
-		(filled_areas_thickness no)
-		(keepout
-			(tracks not_allowed)
-			(vias not_allowed)
-			(pads not_allowed)
-			(copperpour not_allowed)
-			(footprints allowed)
-		)
-		(placement
-			(enabled no)
-			(sheetname "/Microcontroller/")
-		)
-		(fill
-			(thermal_gap 0.5)
-			(thermal_bridge_width 0.5)
-		)
-		(polygon
-			(pts
-				(xy 107.442 86.36) (xy 114.046 86.36) (xy 114.046 93.98) (xy 107.442 93.98)
 			)
 		)
 	)
