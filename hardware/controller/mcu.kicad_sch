@@ -4638,6 +4638,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C84376"
+			(at 196.85 68.58 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "5178d7bb-0442-4dea-945e-23ec9259718f")
 		)
@@ -4698,6 +4707,15 @@
 		)
 		(property "Description" "Resistor, US symbol"
 			(at 219.71 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C27834"
+			(at 219.71 45.72 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4766,6 +4784,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 99.06 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC`" "C15850"
 			(at 99.06 74.93 0)
 			(effects
 				(font
@@ -4910,6 +4937,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C2828857"
+			(at 64.77 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f8d8a79e-6138-4b28-a11f-2446db2fac66")
 		)
@@ -5036,6 +5072,24 @@
 			)
 		)
 		(property "Description" "USB 2.0-only 14P Type-C Receptacle connector"
+			(at 251.46 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2765186"
+			(at 251.46 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field6" ""
 			(at 251.46 49.53 0)
 			(effects
 				(font
@@ -5283,6 +5337,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C84376"
+			(at 189.23 68.58 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "b56c0144-e534-4077-99bb-7bdb2cb4cc1e")
 		)
@@ -5343,6 +5406,15 @@
 		)
 		(property "Description" "Resistor, US symbol"
 			(at 212.09 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C27834"
+			(at 212.09 43.18 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5544,6 +5616,15 @@
 			)
 		)
 		(property "Description" "ESP32-C3-MINI-1 family is an ultra-low-power MCU-based SoC solution that supports 2.4 GHz Wi-Fi and Bluetooth®Low Energy (Bluetooth LE)."
+			(at 146.05 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2934569"
 			(at 146.05 92.71 0)
 			(effects
 				(font
@@ -5850,6 +5931,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C84256"
+			(at 64.77 92.71 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "caf554e3-faa4-471e-b000-34c55fbfb134")
 		)
@@ -6048,6 +6138,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 113.03 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C49678"
+			(at 113.03 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field6" ""
 			(at 113.03 139.7 0)
 			(effects
 				(font
@@ -6255,6 +6363,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C84376"
+			(at 99.06 64.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0ea1ab8f-1d34-4789-8346-80b6cc5ff4d1")
 		)
@@ -6448,6 +6565,24 @@
 		)
 		(property "Description" "Resistor, US symbol"
 			(at 191.77 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C84376"
+			(at 191.77 91.44 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field6" ""
+			(at 191.77 91.44 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6781,6 +6916,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 135.89 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C28323"
 			(at 135.89 52.07 0)
 			(effects
 				(font
@@ -7207,6 +7351,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C2653785"
+			(at 80.01 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "4"
 			(uuid "5f6727a5-3b33-480a-9b54-99857e9fa57c")
 		)
@@ -7430,6 +7583,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C28323"
+			(at 262.89 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f35bec0f-faaf-442c-9e92-489c4e8fec72")
 		)
@@ -7558,6 +7720,15 @@
 			)
 		)
 		(property "Description" "RGB LED with integrated controller"
+			(at 241.3 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C114586"
 			(at 241.3 111.76 0)
 			(effects
 				(font
