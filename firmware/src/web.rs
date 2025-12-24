@@ -3,7 +3,7 @@ use embassy_time::Duration;
 use esp_alloc as _;
 
 use picoserve::{
-    AppBuilder, AppRouter, Router,
+    AppWithStateBuilder, AppRouter, Router,
     extract::Form,
     extract::State,
     response::{File, IntoResponse, IntoResponseWithState, Redirect, with_state::WithStateUpdate},
@@ -57,12 +57,6 @@ async fn get_state(State(value): State<AppStateValue>) -> impl IntoResponse {
     picoserve::response::Json(value)
 }
 
-async fn increment_temperature() -> impl IntoResponseWithState<AppState> {
-    Redirect::to(".").with_state_update(async |state: &AppState| {
-        *state.setpoint_temp.borrow_mut() += 1;
-    })
-}
-
 async fn set_temperature(value: i32) -> impl IntoResponseWithState<AppState> {
     Redirect::to("..").with_state_update(async move |state: &AppState| {
         *state.setpoint_temp.borrow_mut() = value;
@@ -82,10 +76,11 @@ async fn set_config(
 
 pub struct Application;
 
-impl AppBuilder for Application {
-    type PathRouter = impl routing::PathRouter;
+impl AppWithStateBuilder for Application {
+    type State = AppState;
+    type PathRouter = impl routing::PathRouter<Self::State>;
 
-    fn build_app(self) -> picoserve::Router<Self::PathRouter> {
+    fn build_app(self) -> picoserve::Router<Self::PathRouter, AppState> {
         let state = AppState {
             current_temp: 0.into(),
             setpoint_temp: 0.into(),
@@ -106,7 +101,6 @@ impl AppBuilder for Application {
                 "/styles.css",
                 routing::get_service(File::css(include_str!("web/styles.css"))),
             )
-            .route("/increment", get(increment_temperature))
             .route(("/set", parse_path_segment()), get(set_temperature))
             .route("/get_state", get(get_state))
             .route("/set_config", post(set_config))
@@ -135,13 +129,39 @@ pub async fn web_task(
 }
 
 pub struct WebApp {
-    pub router: &'static Router<<Application as AppBuilder>::PathRouter>,
+    pub router: &'static AppRouter<Application>,
     pub config: &'static picoserve::Config<Duration>,
 }
 
 impl Default for WebApp {
     fn default() -> Self {
-        let router = picoserve::make_static!(AppRouter<Application>, Application.build_app());
+
+        let state = AppState {
+            current_temp: 0.into(),
+            setpoint_temp: 0.into(),
+            run_time_elapsed: 0.into(),
+            run_time_total: 0.into(),
+        };
+
+        let router = picoserve::Router::new()
+            .route(
+                "/",
+                routing::get_service(File::html(include_str!("web/index.html"))),
+            )
+            .route(
+                "/buttons.js",
+                routing::get_service(File::javascript(include_str!("web/buttons.js"))),
+            )
+            .route(
+                "/styles.css",
+                routing::get_service(File::css(include_str!("web/styles.css"))),
+            )
+            .route(("/set", parse_path_segment()), get(set_temperature))
+            .route("/get_state", get(get_state))
+            .route("/set_config", post(set_config))
+            .with_state(state);
+
+        let router = picoserve::make_static!(Router<routing::PathRouter<AppState>>, router);
 
         let config = picoserve::make_static!(
             picoserve::Config<Duration>,
