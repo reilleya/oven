@@ -15734,6 +15734,19 @@
 				)
 			)
 		)
+		(property "FT Rotation Offset" "-90"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9420fbe2-4c16-4fe8-9a17-c5e6a63a7ae3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/0cb4d016-03f6-42de-b902-af7c075bf798/d12b7f0e-08a0-4fb4-835a-548eb4fd39e1")
 		(sheetname "/Microcontroller/")
 		(sheetfile "mcu.kicad_sch")
@@ -17598,6 +17611,19 @@
 					(xy 163.430201 103.762335) (xy 163.387279 103.836098) (xy 163.336665 103.898686) (xy 163.278091 103.951252)
 				)
 			)
+		)
+	)
+	(gr_text "#"
+		(at 147.828 97.028 0)
+		(layer "B.SilkS")
+		(uuid "7f9cec04-2b57-4ce0-9912-0072f0786757")
+		(effects
+			(font
+				(size 5 5)
+				(thickness 0.8)
+				(bold yes)
+			)
+			(justify left bottom mirror)
 		)
 	)
 	(segment
@@ -23808,6 +23834,37 @@
 				(xy 111.352085 72.707266) (xy 111.141289 72.539162) (xy 110.912997 72.395716) (xy 110.912994 72.395714)
 				(xy 110.670082 72.278734) (xy 110.563791 72.241541) (xy 110.507015 72.20082) (xy 110.481268 72.135867)
 				(xy 110.494724 72.067305) (xy 110.543112 72.016902) (xy 110.604746 72.0005) (xy 128.133501 72.0005)
+			)
+		)
+	)
+	(zone
+		(net 0)
+		(net_name "")
+		(layer "B.SilkS")
+		(uuid "26a57fdb-03e7-491a-8ce4-4bc4a9046d80")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0.5)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(fill yes
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy 117.348 90.17) (xy 141.732 90.17) (xy 141.732 97.79) (xy 117.348 97.79)
+			)
+		)
+		(filled_polygon
+			(layer "B.SilkS")
+			(island)
+			(pts
+				(xy 141.675039 90.189685) (xy 141.720794 90.242489) (xy 141.732 90.294) (xy 141.732 97.666) (xy 141.712315 97.733039)
+				(xy 141.659511 97.778794) (xy 141.608 97.79) (xy 117.472 97.79) (xy 117.404961 97.770315) (xy 117.359206 97.717511)
+				(xy 117.348 97.666) (xy 117.348 90.294) (xy 117.367685 90.226961) (xy 117.420489 90.181206) (xy 117.472 90.17)
+				(xy 141.608 90.17)
 			)
 		)
 	)
