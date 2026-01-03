@@ -5260,6 +5260,19 @@
 				)
 			)
 		)
+		(property "FT Position Offset" "0,0.6032"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "759b5382-7877-4ed8-8f50-0b6b0a0d6707")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "QFN3p0x5p0x1p6_MPM3606A_MNP")
 		(path "/dc443349-7fb4-42c6-a18e-09a219bb9ecd/e5883270-1d70-4435-b900-e804c8c9c014")
 		(sheetname "/Power/")
@@ -9073,6 +9086,19 @@
 				)
 			)
 		)
+		(property "FT Position Offset" "0,-2.7305"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a6e39404-1c4f-4ca9-853a-21bc8d42b7c3")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
 		(path "/0cb4d016-03f6-42de-b902-af7c075bf798/404c5351-ebea-46ac-8c00-d57b93714674")
 		(sheetname "/Microcontroller/")
 		(sheetfile "mcu.kicad_sch")
@@ -10744,6 +10770,19 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "03c84775-3156-48da-9865-a2c17401b01f")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "FT Position Offset" "0,1.3335"
+			(at 0 0 270)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8c441540-4620-46de-ae46-667a801189f1")
 			(effects
 				(font
 					(size 1 1)
@@ -17614,7 +17653,7 @@
 		)
 	)
 	(gr_text "#"
-		(at 147.828 97.028 0)
+		(at 151.13 97.028 0)
 		(layer "B.SilkS")
 		(uuid "7f9cec04-2b57-4ce0-9912-0072f0786757")
 		(effects
@@ -23854,17 +23893,17 @@
 		)
 		(polygon
 			(pts
-				(xy 117.348 90.17) (xy 141.732 90.17) (xy 141.732 97.79) (xy 117.348 97.79)
+				(xy 120.65 90.17) (xy 145.034 90.17) (xy 145.034 97.79) (xy 120.65 97.79)
 			)
 		)
 		(filled_polygon
 			(layer "B.SilkS")
 			(island)
 			(pts
-				(xy 141.675039 90.189685) (xy 141.720794 90.242489) (xy 141.732 90.294) (xy 141.732 97.666) (xy 141.712315 97.733039)
-				(xy 141.659511 97.778794) (xy 141.608 97.79) (xy 117.472 97.79) (xy 117.404961 97.770315) (xy 117.359206 97.717511)
-				(xy 117.348 97.666) (xy 117.348 90.294) (xy 117.367685 90.226961) (xy 117.420489 90.181206) (xy 117.472 90.17)
-				(xy 141.608 90.17)
+				(xy 144.977039 90.189685) (xy 145.022794 90.242489) (xy 145.034 90.294) (xy 145.034 97.666) (xy 145.014315 97.733039)
+				(xy 144.961511 97.778794) (xy 144.91 97.79) (xy 120.774 97.79) (xy 120.706961 97.770315) (xy 120.661206 97.717511)
+				(xy 120.65 97.666) (xy 120.65 90.294) (xy 120.669685 90.226961) (xy 120.722489 90.181206) (xy 120.774 90.17)
+				(xy 144.91 90.17)
 			)
 		)
 	)

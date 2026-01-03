@@ -5089,7 +5089,7 @@
 				(hide yes)
 			)
 		)
-		(property "Field6" ""
+		(property "FT Position Offset" "0,1.3335"
 			(at 251.46 49.53 0)
 			(effects
 				(font
@@ -5625,6 +5625,15 @@
 			)
 		)
 		(property "LCSC" "C2838502"
+			(at 146.05 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "FT Position Offset" "0,-2.7305"
 			(at 146.05 92.71 0)
 			(effects
 				(font
